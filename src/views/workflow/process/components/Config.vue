@@ -68,7 +68,8 @@ export default {
                     try {
                         this.formData.processKey = this.processKey
                         let response = await api.updateProcessConfig(this.formData)
-                        if(response.code === 200) {
+                        // console.log(response);
+                        if(response.data.code === 200) {
                             // 刷新数据
                             this.$parent.fetchData()
                             this.$message.success('提交成功')

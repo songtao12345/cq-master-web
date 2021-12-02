@@ -37,6 +37,15 @@ export function getInfo(token) {
   })
 }
 
+
+//   获取路由表接口
+export function getMoveRouter() {
+  return request({
+    url: '/index/nav',
+    method: 'get',
+  })
+}
+
 /*export function logout() {
   return request({
     url: '/vue-admin-template/user/logout',

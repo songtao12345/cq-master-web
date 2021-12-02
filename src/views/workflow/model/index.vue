@@ -164,14 +164,8 @@ export default {
 
         // 部署流程
         async clickDeploy(id) {
-            // console.log(id);
-            // await api.deployById(id).then(res=>{
-            //     console.log(res);
-            // })
-
-
-            const {code} = await api.deployById(id)
-            if(code === 200) {
+            const {data} = await api.deployById(id)
+            if(data.code === 200) {
                 this.$message.success('部署成功')
                 // 刷新列表数据
                 this.fetchData()

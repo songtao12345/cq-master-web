@@ -149,6 +149,7 @@ export default {
                                 }
                                 this.file.append('uploadrole', "lizy");
                                     response = await api.add(this.file,this.formData)
+                                    console.log(response);
 
 
                             // response = await api.addmany(this.formData.title.this.formData.description)
@@ -156,7 +157,7 @@ export default {
                             response = await api.update(this.formData)
                       }
                       console.log(response);
-                      if(response.code === 200) {
+                      if(response.data.code === 200) {
                         //   this.$refs.elup.autoUpload = true
                           // 将表单清空
                           this.$refs['formData'].resetFields()

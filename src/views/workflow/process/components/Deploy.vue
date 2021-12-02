@@ -24,8 +24,10 @@ export default {
             // 封装上传图片的表单对象
           const data = new FormData()
           data.append('file', file.file)
-          const {code} = await api.deployProcessFile(data)
-          if(code === 200) {
+    
+          const res = await api.deployProcessFile(data)
+          console.log(res.data.code);
+          if(res.data.code === 200) {
             this.$message.success('部署成功')
             this.$parent.fetchData()
             this.visible = false

@@ -37,11 +37,11 @@ export const constantRoutes = [
     hidden: true
   },
 
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
+  // {
+  //   path: '/404',
+  //   component: () => import('@/views/404'),
+  //   hidden: true
+  // },
   {
     path: '/',
     component: Layout,
@@ -53,103 +53,103 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
-  {
-    path: '/workflow',
-    component: Layout,
-    redirect: '/workflow/model',
-    name: 'Workflow',
-    meta: { title: '工作流程', icon: 'example'},
-    children: [
-      {
-        path: 'model',
-        name: 'Model',
-        component: () => import('@/views/workflow/model'),
-        meta: { title: '模型管理', icon: 'tree'}
-      },
-      {
-        path: 'process',
-        name: 'Process',
-        component: () => import('@/views/workflow/process'),
-        meta: { title: '流程管理', icon: 'tree' }
-      }
-    ]
-  },
+  // {
+  //   path: '/workflow',
+  //   component: Layout,
+  //   redirect: '/workflow/model',
+  //   name: 'Workflow',
+  //   meta: { title: '工作流程', icon: 'example'},
+  //   children: [
+  //     {
+  //       path: 'model',
+  //       name: 'Model',
+  //       component: () => import('@/views/workflow/model'),
+  //       meta: { title: '模型管理', icon: 'tree'}
+  //     },
+  //     {
+  //       path: 'process',
+  //       name: 'Process',
+  //       component: () => import('@/views/workflow/process'),
+  //       meta: { title: '流程管理', icon: 'tree' }
+  //     }
+  //   ]
+  // },
 
-  {
-    path: '/apply',
-    component: Layout,
-    redirect: '/apply/leave',
-    name: 'Apply',
-    meta: { title: '业务办理', icon: 'form' },
-    children: [
-      {
-        path: 'leave',
-        name: 'Leave',
-        component: () => import('@/views/workflow/apply/leave'),
-        meta: { title: '请假申请', icon: 'table' }
-      },
-      {
-        path: 'loan',
-        name: 'Loan',
-        component: () => import('@/views/workflow/apply/loan'),
-        meta: { title: '借款申请', icon: 'table' }
-      },
-      {
-        path: 'oil',
-        name: 'OldOilProd',
-        component:() => import('@/views/workflow/apply/oil'),
-        meta: { title: '老油田稳产方案', icon: 'table' }
-      }
-    ]
-  },
+  // {
+  //   path: '/apply',
+  //   component: Layout,
+  //   redirect: '/apply/leave',
+  //   name: 'Apply',
+  //   meta: { title: '业务办理', icon: 'form' },
+  //   children: [
+  //     {
+  //       path: 'leave',
+  //       name: 'Leave',
+  //       component: () => import('@/views/workflow/apply/leave'),
+  //       meta: { title: '请假申请', icon: 'table' }
+  //     },
+  //     {
+  //       path: 'loan',
+  //       name: 'Loan',
+  //       component: () => import('@/views/workflow/apply/loan'),
+  //       meta: { title: '借款申请', icon: 'table' }
+  //     },
+  //     {
+  //       path: 'oil',
+  //       name: 'OldOilProd',
+  //       component:() => import('@/views/workflow/apply/oil'),
+  //       meta: { title: '老油田稳产方案', icon: 'table' }
+  //     }
+  //   ]
+  // },
 
-  {
-    path: '/task',
-    component: Layout,
-    redirect: '/task/await',
-    name: 'Task',
-    meta: { title: '个人任务', icon: 'example' },
-    children: [
-      {
-        path: 'await',
-        name: 'Await',
-        component: () => import('@/views/workflow/await'),
-        meta: { title: '待办任务', icon: 'tree' }
-      },
-      {
-        path: 'complete',
-        name: 'Complete',
-        component: () => import('@/views/workflow/complete'),
-        meta: { title: '已办任务', icon: 'tree' }
-      }
-    ]
-  },
+  // {
+  //   path: '/task',
+  //   component: Layout,
+  //   redirect: '/task/await',
+  //   name: 'Task',
+  //   meta: { title: '个人任务', icon: 'example' },
+  //   children: [
+  //     {
+  //       path: 'await',
+  //       name: 'Await',
+  //       component: () => import('@/views/workflow/await'),
+  //       meta: { title: '待办任务', icon: 'tree' }
+  //     },
+  //     {
+  //       path: 'complete',
+  //       name: 'Complete',
+  //       component: () => import('@/views/workflow/complete'),
+  //       meta: { title: '已办任务', icon: 'tree' }
+  //     }
+  //   ]
+  // },
 
-  {
-    path: '/instance',
-    component: Layout,
-    redirect: '/instance/running',
-    name: 'Instance',
-    meta: { title: '流程实例', icon: 'example' },
-    children: [
-      {
-        path: 'running',
-        name: 'Running',
-        component: () => import('@/views/workflow/running'),
-        meta: { title: '运行中流程', icon: 'tree' }
-      },
-      {
-        path: 'finish',
-        name: 'Finish',
-        component: () => import('@/views/workflow/finish'),
-        meta: { title: '已结束流程', icon: 'tree' }
-      },
-    ]
-  },
+  // {
+  //   path: '/instance',
+  //   component: Layout,
+  //   redirect: '/instance/running',
+  //   name: 'Instance',
+  //   meta: { title: '流程实例', icon: 'example' },
+  //   children: [
+  //     {
+  //       path: 'running',
+  //       name: 'Running',
+  //       component: () => import('@/views/workflow/running'),
+  //       meta: { title: '运行中流程', icon: 'tree' }
+  //     },
+  //     {
+  //       path: 'finish',
+  //       name: 'Finish',
+  //       component: () => import('@/views/workflow/finish'),
+  //       meta: { title: '已结束流程', icon: 'tree' }
+  //     },
+  //   ]
+  // },
 
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

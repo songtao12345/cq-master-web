@@ -117,9 +117,6 @@ export default {
             this.loading = false
           })
 
-          // this.$store.dispatch('user/getInfo',this.loginForm).then(()=>{
-          //   console.log(res);
-          // })
 
 
 
@@ -144,8 +141,11 @@ export default {
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
-$light_gray:#fff;
-$cursor: #fff;
+// $light_gray:#fff;
+// $cursor: #fff;
+$light_gray: black;
+$cursor: black;
+
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -189,21 +189,30 @@ $cursor: #fff;
 <style lang="scss" scoped>
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
-$light_gray:#eee;
+// $light_gray:#eee;
+$light_gray: #2d3a4b;
 
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
+  // background-color: $bg;
   overflow: hidden;
+  // background: url("https://el-admin.xin/static/img/background.9b952c4a.jpg") no-repeat;
+  background: url("../../assets/img/login-background.jpg") no-repeat;
+  background-size: 100%;
 
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
+    // padding: 160px 35px 0;
+     padding: 35px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+    background: rgba(255, 255, 255, 0.8);
+    // margin-top: 80px;
+    margin-top: 10%;
+    border-radius: 10px;
   }
 
   .tips {
@@ -235,6 +244,9 @@ $light_gray:#eee;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+      // text-shadow: -1px -1px 1px #000,1px 1px 1px #fff;
+			text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000; 
+   
     }
   }
 

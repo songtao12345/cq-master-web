@@ -127,7 +127,7 @@ export default {
             ],
             page: {
                 current: 1,
-                size: 20,
+                size: 10,
                 total: 0
             },
             query: {}, // 查询条件
@@ -141,8 +141,15 @@ export default {
     methods: {
         // 分页条件查询文章列表
         async fetchData() {
+
+            // api.getList(this.query, this.page.current).then(res=>{
+            //     console.log(res);
+            // })
+
+
+
             const { data } = await api.getList(this.query, this.page.current, this.page.size)
-            // console.log(data);
+            console.log(data);
             this.list = data.data.records
             this.page.total = data.total
         },
