@@ -138,7 +138,7 @@ export default {
             const { data } = await api.getList(this.query, this.page.current, this.page.size)
        
             console.log(data);
-            this.list = data.records
+            this.list = data.data.records
             this.page.total = data.total
         },
         // 刷新重置

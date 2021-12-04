@@ -31,7 +31,7 @@
         <el-table-column label="用户名" min-width="160" prop="username"></el-table-column>
         <el-table-column label="昵称" min-width="160" prop="nickName"></el-table-column>
         <el-table-column label="手机号" min-width="160" prop="mobile"></el-table-column>
-        <el-table-column label="角色" min-width="140"></el-table-column>
+        <!-- <el-table-column label="角色" min-width="140"></el-table-column> -->
         <el-table-column label="操作" min-width="160">
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditUserDialog(scope.row.id)"></el-button>
@@ -59,6 +59,9 @@
       <el-form :model="addUserForm" :rules="addUserFormRules" ref="addUserFormRef" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="addUserForm.username"></el-input>
+        </el-form-item>
+         <el-form-item label="密码" prop="password">
+          <el-input v-model="addUserForm.password"></el-input>
         </el-form-item>
         <el-form-item label="用户昵称" prop="nickName">
           <el-input v-model="addUserForm.nickName"></el-input>
@@ -152,6 +155,10 @@ export default {
       addUserFormRules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 2, max: 10, message: '用户名的长度在2到10之间', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 2, max: 10, message: '用户名的长度在2到10之间', trigger: 'blur' }
         ],
         nickName: [
@@ -302,7 +309,7 @@ export default {
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
-    
+       console.log(id);
       const {data : res} = await deleteUser(id)
       
     //   const { data: res } = await this.$http.post('sys/user/del/' + id)

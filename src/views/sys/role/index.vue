@@ -32,8 +32,9 @@
         <el-table-column label="角色描述" min-width="160" prop="remark"></el-table-column>
         <el-table-column label="操作" min-width="160">
           <template slot-scope="scope">
+            <el-button type="success" icon="el-icon-star-off" size="mini" @click="assignPermission(scope.row)"></el-button>
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditRoleDialog(scope.row.id)"></el-button>
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeRoles(scope.row.id)"></el-button>
+            <el-button type="danger" :disabled="scope.row.name == '超级管理员' || scope.row.name == '普通管理员'" icon="el-icon-delete" size="mini" @click="removeRoles(scope.row.id)"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,14 +53,14 @@
           <el-input v-model="addRoleForm.remark"></el-input>
         </el-form-item>
         <!--树形控件  -->
-        <el-tree
+        <!-- <el-tree
           :data = "permissionlist"
           :props="treeProps"
           show-checkbox
           node-key="id"
           default-expand-all
           :default-checked-keys = "defKeys"
-          ref = "treeRef"></el-tree>
+          ref = "treeRef"></el-tree> -->
       </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="addRoleDialogVisible = false">取 消</el-button>
@@ -82,18 +83,43 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="editRoleDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="addRole">确 定</el-button>
+    <el-button type="primary" @click="editRole">确 定</el-button>
+  </span>
+    </el-dialog>
+
+
+      <!--    分配权限对话框-->
+    <el-dialog
+      title="分配角色权限信息"
+      :visible.sync="assignPermissionVisible"
+      width="50%"
+      @close="assignPermissionDialogClosed">
+        <!--树形控件  -->
+        <el-tree
+          :check-strictly = 'isCheck'
+          :data = "permissionlist"
+          :props="treeProps"
+          show-checkbox
+          node-key="id"
+          default-expand-all
+          :default-checked-keys = "defKeys"
+          ref = "treeRef"></el-tree>
+
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="assignPermissionVisible = false">取 消</el-button>
+    <el-button type="primary" @click="addPermission">确 定</el-button>
   </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import {getRoles, getRolesInfo, editRoles, deleteRoles, addRoles, getPermission} from '@/api/system/roles'
+import {getRoles, getRolesInfo, editRoles, deleteRoles, addRoles, getPermission, assignPermissionData} from '@/api/system/roles'
 export default {
   name: 'Roles',
   data() {
     return {
+      isCheck: false,
       // 角色列表
       rolelist: [],
       // 查询数据
@@ -114,6 +140,8 @@ export default {
       },
       // 控制修改对话框的显示与隐藏
       editRoleDialogVisible: false,
+      // 分配权限
+      assignPermissionVisible: false,
       // 修改对话框的表单对象
       editRoleForm: {},
       // 修改对话框的表单验证对象
@@ -129,7 +157,7 @@ export default {
       permissionlist: [],
       // 树形控件绑定对象
       treeProps: {
-        label: 'name',
+        label: 'title',
         children: 'children'
       },
       //   默认选中节点Id值数组
@@ -151,13 +179,16 @@ export default {
       }
       // debugger
       this.rolelist = res.data
-      // debugger
+      console.log(this.rolelist);
+    
     },
     // 搜索框的重置方法
     resetSearch() {
       this.query = ''
       this.getRoleList()
     },
+
+    
     // 获取权限列表
     async getPermissionList() {
 
@@ -166,7 +197,7 @@ export default {
       if (res.code !== 200) {
         this.$message.error('获取权限列表失败')
       }
-      // console.log(res)
+      console.log(res.data)
       this.permissionlist = res.data
     },
     // 展示新增角色的对话框
@@ -174,14 +205,41 @@ export default {
       this.addRoleDialogVisible = true
       this.getPermissionList()
     },
+
+    //添加权限
+    async addPermission() {
+      const keys = [...this.$refs.treeRef.getCheckedKeys(),...this.$refs.treeRef.getHalfCheckedKeys()]
+      let idStr = keys.join(',')
+      console.log(idStr);
+      if(idStr == ''){
+        idStr = ' '
+      }
+      console.log(this.roleId,idStr);
+
+      // 调用分配权限的接口
+      assignPermissionData(idStr,this.roleId).then(res=>{
+        console.log(res);
+        if(res.data.code == 200){
+          this.$message.success('分配权限成功')
+          //  关闭对话框
+          this.assignPermissionVisible = false
+          //  重新获取数据列表
+          this.getRoleList()
+
+
+        }
+      })
+
+    },
+
     // 添加角色
     async addRole() {
       this.$refs.addRoleFormRef.validate(async valid => {
         if (!valid) return
         //   校验通过发送请求
-        console.log(this.roleId)
-        console.log(this.defKeys)
-        const {data: res} = await addRoles(this.addUserForm)
+        // console.log(this.roleId)
+        // console.log(this.defKeys)
+        const {data: res} = await addRoles(this.addRoleForm)
         // const { data: res } = await this.$http.post('sys/role/save')
     
         if (res.code !== 200) {
@@ -195,10 +253,36 @@ export default {
         this.getRoleList()
       })
     },
+    // 修改角色
+     editRole() {
+      this.$refs.editRoleFormRef.validate(async valid => {
+        if (!valid) return
+        //   校验通过发送请求
+        // console.log(this.editRoleForm);
+        const {data: res} = await editRoles(this.editRoleForm.id,this.editRoleForm.name,this.editRoleForm.remark)
+        // console.log(res);
+    
+        if (res.code !== 200) {
+          this.$message.error('修改角色失败')
+        }
+        // 添加角色成功
+        this.$message.success('修改角色成功！')
+        //  关闭对话框
+        this.editRoleDialogVisible = false
+        //  重新获取数据列表
+        this.getRoleList()
+      })
+    },
     // 监听新增对话框的关闭事件
     addRoleDialogClosed() {
       // 关闭对话框，清空表单内容
       this.$refs.addRoleFormRef.resetFields()
+    },
+       // 监听分配权限对话框的关闭事件
+    assignPermissionDialogClosed() {
+       this.defKeys = []
+      // 关闭对话框，清空表单内容
+      // this.$refs.assignPermissionFormRef.resetFields()
     },
     // 展示编辑用户对话框
     async showEditRoleDialog(id) {
@@ -234,6 +318,7 @@ export default {
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
+      console.log(id);
     
       const {data : res} = await deleteRoles(id)
       
@@ -245,6 +330,46 @@ export default {
       // 重新获取数据列表
       this.getRoleList()
 
+    },
+
+
+    // 分配权限对话框
+    assignPermission(row) {
+     this.roleId = row.id
+    //  console.log(this.roleId);
+      this.assignPermissionVisible = true
+      this.getPermissionList()
+      getRolesInfo(row.id).then(res=>{
+        console.log(res.data.data.perIds);
+        let arr = res.data.data.perIds
+        this.isCheck = true
+        // console.log(arr);
+        this.defKeys = arr
+        setTimeout(() => {
+        this.isCheck = false
+         }, 500);
+
+      })
+
+
+          // const { data: res } = await getRolesInfo(row.id)
+
+      // // const { data: res } = await this.$http.post('sys/role/detail/', id)
+      // console.log(res)
+      // if (res.code !== 200) {
+      //   this.$message.error('获取角色信息失败')
+      // }
+      // // 将返回数据放到编辑表单中
+      // this.editRoleForm = res.data
+      // this.editRoleDialogVisible = true
+
+      // let arr = row.perIds.split(',')
+      // this.isCheck = true
+      // console.log(arr);
+      // this.defKeys = arr
+      // setTimeout(() => {
+      //   this.isCheck = false
+      // }, 500);
     }
 
   }

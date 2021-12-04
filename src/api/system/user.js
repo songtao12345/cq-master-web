@@ -20,7 +20,7 @@ export function editUser(data) {
  // 根据ID获取用户信息
 export function getUserInfo(userId) {
     return request({
-        url: '/sys/user/detail',
+        url: `/sys/user/detail/${userId}`,
         method: 'post',
         params: {
           userId

@@ -1,6 +1,5 @@
 import request from '@/utils/request'
  // 获取角色信息
-
 export function getRoles(name) {
     return request({
         url: 'sys/role/list',
@@ -9,11 +8,15 @@ export function getRoles(name) {
     })
 }
  // 编辑角色
-export function editRoles(data) {
+export function editRoles(id,name,remark) {
     return request({
-        url: '/sys/user/edit',
+        url: '/sys/role/edit',
         method: 'post',
-        data
+        params: {
+            id,
+            name,
+            remark
+        }
     })
 }
 
@@ -26,12 +29,12 @@ export function getPermission() {
 }
 
  // 根据ID获取角色信息
-export function getRolesInfo(userId) {
+export function getRolesInfo(roleId) {
     return request({
-        url: '/sys/user/detail',
+        url: `/sys/role/detail/${roleId}`,
         method: 'post',
         params: {
-          userId
+          roleId
        }
        
     })
@@ -40,8 +43,8 @@ export function getRolesInfo(userId) {
 //删除角色
 export function deleteRoles(userId) {
     return request({
-        url: '/sys/user/del',
-        method: 'post',
+        url: `/sys/role/del/${userId}`,
+        method: 'get',
         params: {
             userId
         }
@@ -51,8 +54,21 @@ export function deleteRoles(userId) {
 // 新增角色
  export function addRoles(data) {
      return request({
-         url: '/sys/user/save',
+         url: '/sys/role/save',
          method: 'post',
          data
      })
  }
+
+
+ // 添加用户权限
+ export function assignPermissionData(perIds,roleId) {
+    return request({
+        url: `/sys/role/editPermission`,
+        method: 'post',
+        params: {
+            perIds,
+            roleId
+        }
+    })
+}
