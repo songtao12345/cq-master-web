@@ -27,6 +27,8 @@
 
 <script>
 import api from '@/api/instance'
+import axios from 'axios'
+import { getToken } from '@/utils/auth'
 
 // 导入所有vue组件 （位于：@/components/Process/Form 目录下）
 const allComponents = require.context('@/components/Process/Form', false,/\.vue$/)
@@ -36,7 +38,7 @@ allComponents.keys().forEach(fileName => {
   let comp = allComponents(fileName)
   res_components[fileName.replace(/^\.\/(.*)\.\w+$/, '$1')] = comp.default
 })
-import LeaveForm from './Form/LeaveForm.vue'
+// import LeaveForm from './Form/LeaveForm.vue'
 export default {
     components: res_components,
     
@@ -55,7 +57,16 @@ export default {
         currProcessForm: null, // 当前流程表单组件
       }
     },
-
+    // mounted(){
+    //   axios.get('http://172.20.10.3:8888/instance/history/image?procInstId=3a67fd10-5997-11ec-ac3a-00e04c886b28&t=0.5795287870268571',{
+    //     headers:{
+    //       'token':'eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSSkzJzcxT0lFKrShQsjI0M7Y0MjIwNTGpBQAyXfvaIAAAAA.PlnYUJbxxuciTo0buRs4LLWOfgrZSJBZn5A862X7na1ogIcMOktG3Zjd7m59AWdRdKTiuL13mM_ICkomkFWb6g'
+    //     }
+    //   }).then(res=>{
+    //     console.log(res);
+    //     this.url = res.data
+    //   })
+    // },
     watch: {
       visible(newVal) {
           if(newVal) {
@@ -63,18 +74,40 @@ export default {
             // 审批历史数据
             this.getHistoryInfoList()
             // 流程实例审批历史图
+            // this.getImag()
+
+            // api.getHistoryProcessImage(this.processInstanceId).then(res=>{
+            //   console.log(res);
+            // })
+
             this.url = api.getHistoryProcessImage(this.processInstanceId)
+            // console.log(this.url);
+  
           }
       }
+      // url() {
+      //   debugger
+      //   axios.get(this.url,{
+      //     Headers: {
+      //       Token: getToken
+      //     }
+      //   })
+      // }
     },
 
     methods: {
+      // async getImag() {
+          
+      //     let res = await api.getHistoryProcessImage(this.processInstanceId)
+      //     console.log("获取图片的结果为"+res);
+      // },
         // 通过流程实例ID获取对应流程业务表单组件名
         async getFormNameByProcInstId() {
           try {
               this.loading = true
               const {data} = await api.getFormNameByProcInstId(this.processInstanceId)
-              this.currProcessForm = data
+              console.log(data);
+              this.currProcessForm = data.data
               this.loading = false
           } catch (error) {
               this.loading = false
@@ -84,7 +117,8 @@ export default {
         // 查询审批历史记录
         async getHistoryInfoList() {
             const { data } = await api.getHistoryInfoList(this.processInstanceId)
-            this.list = data
+            console.log(data);
+            this.list = data.data
         },
     }
 

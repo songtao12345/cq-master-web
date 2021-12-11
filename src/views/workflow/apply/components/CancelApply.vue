@@ -47,7 +47,7 @@ export default {
                             message: this.formData.message
                       }
                       let response = await api.cancelApply(params)
-                      if(response.code === 200) {
+                      if(response.data.code == 200) {
                           // 刷新数据
                           this.$parent.fetchData()
                           this.$message.success('撤回成功')

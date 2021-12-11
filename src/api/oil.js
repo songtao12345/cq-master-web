@@ -74,7 +74,7 @@ export default {
   // 查询详情
   getById(id) {
     return request({
-        url: `/oldOilProd/${id}`,
+        url: `/spoof/${id}`,
         method: 'get'
     })
   },
@@ -82,7 +82,7 @@ export default {
   // 修改申请
   update(data) {
     return request({
-        url: '/oldOilProd',
+        url: '/spoof',
         method: 'put',
         data
     })
@@ -91,7 +91,7 @@ export default {
    // 上传文件
    upLoadFile(data) {
       return request({
-          url: `/oldOilProd/upload`,
+          url: `/spoof/upload`,
           method: 'post',
           data
       })

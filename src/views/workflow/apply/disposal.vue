@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container">
+     <div class="app-container">
         <!-- 条件查询 -->       
         <el-form :inline="true" :model="query" size="small">
              <el-form-item label="标题">
@@ -53,30 +53,27 @@
 
 
 
-        <!-- 老油田稳产表单 -->
+        <!-- 年度开发计划表单 -->
         <el-dialog v-dialogDrag :title="operate" :visible.sync="formVisible" @close="closeForm(false)" width="1000px" destroy-on-close>
-            <oil-form :operate="operate" :businessKey="row.id" @close="closeForm"></oil-form>
+            <disposal-form :operate="operate" :businessKey="row.id" @close="closeForm"></disposal-form>
         </el-dialog>
         <!-- 撤回申请 -->
-        <cancel-apply ref="cancelRef" :businessKey="row.id" :procInstId="row.processInstanceId"></cancel-apply>
+        <!-- <cancel-apply ref="cancelRef" :businessKey="row.id" :procInstId="row.processInstanceId"></cancel-apply> -->
 
          <!-- 审批历史 -->
-        <history ref="historyRef" :businessKey="row.id" :processInstanceId="row.processInstanceId" ></history>
+        <!-- <history ref="historyRef" :businessKey="row.id" :processInstanceId="row.processInstanceId" ></history> -->
 
          <!-- 老油田稳产表单详情信息 -->
-        <el-dialog v-dialogDrag :title="operate" :visible.sync="detailFormVisible" @close="closeForm(false)" width="1000px" destroy-on-close>
+        <!-- <el-dialog v-dialogDrag :title="operate" :visible.sync="detailFormVisible" @close="closeForm(false)" width="1000px" destroy-on-close>
             <oil-detail :operate="operate" :businessKey="row.id" @close="closeForm"></oil-detail>
-        </el-dialog>
+        </el-dialog> -->
     </div>
 </template>
-<script>
-import OilForm from '@/components/Process/Form/OilForm'
-import OilDetail from './components/OilDetail'
-import CancelApply from './components/CancelApply'
-import api from '@/api/oil'
-import apiIns from '@/api/instance'
-import History from '@/components/Process/History'
 
+<script>
+import api from '@/api/disposal'
+import apiIns from '@/api/instance'
+import DisposalForm from '@/components/Process/Form/DisposalForm'
 // 流程状态
 const processStatus = [
     {value: 0, label: '已撤回'},
@@ -87,14 +84,11 @@ const processStatus = [
     {value: 5, label: '已删除'},
 ]
 export default {
-    name: 'Oil',
-    components: {
-        OilForm,
-        CancelApply,
-        OilDetail,
-        History
+    name: 'Disposal',
+    components:{
+        DisposalForm
     },
-    data() {
+     data() {
         return {
             query: {},
             processStatus, // 流程状态
@@ -133,32 +127,25 @@ export default {
         },
         // 分页条件查询文章列表
         async fetchData() {
-                // const  res = await api.getList(this.query, this.page.current, this.page.size)
-                //      console.log(res);
+        
             const { data } = await api.getList(this.query, this.page.current, this.page.size)
        
             console.log(data);
             this.list = data.data.records
-            this.page.total = data.total
+            this.page.total = data.data.total
         },
-        // 刷新重置
+           // 刷新重置
         reload() {
             this.query = {}
             this.fetchData()
         },
-          // 点击显示表单
+             // 点击显示表单
         clickShowForm(operate, row = {}) {
             this.operate = operate
             this.row = row
             this.formVisible = true
         },
-        // 详情页
-        clickDetailShowForm(operate, row = {}) {
-            this.operate = operate
-            this.row = row
-            this.detailFormVisible = true
-        },
-         // 关闭表单
+           // 关闭表单
         closeForm(refresh) {
             // 清空点击数据
             this.row = {}
@@ -169,12 +156,7 @@ export default {
                 this.fetchData()
             }
         },
-        // 撤回申请
-        clickCancelProcess(row) {
-            this.row = row
-            this.$refs.cancelRef.visible = true
-        },
-        // 提交申请
+         // 提交申请
         clickSubmit(row) {
             this.$confirm('此操作将发起申请, 是否继续?', '提示', {
             confirmButtonText: '确定',
@@ -189,7 +171,7 @@ export default {
                             //assignees: this.formData.assignees.split(',') // 审批人转为数组
                             //assignees: this.formData.assignees
                         }
-                        console.log(data);
+                        // console.log(data);
                     apiIns.startProcessApply(data).then(res => {
                     // console.log(res);
                     if(res.data.code !== 200) return this.$message.error('申请失败')
@@ -205,13 +187,10 @@ export default {
             });
         },
 
-          // 点击审批进度
-        clickProcessHistory(row) {
-            this.row = row
-            this.$refs.historyRef.visible = true
 
-        },
+
     }
+    
 }
 </script>
 

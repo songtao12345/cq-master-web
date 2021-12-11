@@ -94,7 +94,7 @@ export default {
         // 分页条件查询
         async fetchData() {
             const { data } = await api.getCompleteTaskList(this.query, this.page.current, this.page.size)
-            this.list = data.records
+            this.list = data.data.records
             this.page.total = data.total
         },
 

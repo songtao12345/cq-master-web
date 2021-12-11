@@ -36,6 +36,9 @@
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditUserDialog(scope.row.id)"></el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
+            <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false" >
+                    <el-button type="warning" icon="el-icon-setting" size="mini" @click="assignRole(scope.row.id)"></el-button>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
@@ -103,11 +106,47 @@
     <el-button type="primary" @click="editUserInfo">确 定</el-button>
   </span>
     </el-dialog>
+
+  <!-- 分配角色 -->
+    <el-dialog title="分配角色" :visible.sync="roleDialogVisible" width="50%" @close="roleClose">
+       <!-- <div> -->
+                     
+            <!-- <p>用户:  {{userInfo.username}}</p> -->
+            <!-- <p>当前的角色:  {{userInfo.role_name}}</p> -->
+            <!-- <p>用户当前角色:
+            <p>分配新角色:
+                <el-select v-model="selectedRoleId" placeholder="请选择" multiple>
+                <el-option v-for="item in rolesList" :key="item.id" :label="item.name" :value="item.id">
+                </el-option>
+                </el-select>    
+            </p>
+        </div> -->
+        <el-form ref="assignRoleFormRef" :model="assignRoleForm" label-width="100px">
+            <el-form-item label="当前用户">
+              <el-input v-model="assignRoleForm.username"></el-input>
+            </el-form-item>
+            <el-form-item label="用户拥有角色">
+              <el-tag v-for="role in assignRoleForm.roleList" :key="role.id">{{role.name}}</el-tag>
+            </el-form-item>
+            <el-form-item label="用户分配角色">
+              <el-select v-model="selectedRoleId" placeholder="请选择" multiple>
+              <el-option v-for="item in rolesList" :key="item.id" :label="item.name" :value="item.id">
+              </el-option>
+              </el-select>
+            </el-form-item>  
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="roleDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="savaRoleInfo">确 定</el-button>
+        </span>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import {getUser, getUserInfo, editUser, deleteUser, addUser} from '@/api/system/user'
+import {getRoles, assignRoles} from '@/api/system/roles'
 export default {
   name: 'User',
   data() {
@@ -132,6 +171,10 @@ export default {
     return {
       // 用戶列表數據
       userlist: [],
+      userInfo: {},
+      roleDialogVisible: false,
+      selectedRoleId: '',
+      rolesList: [],
       queryInfo: {
         query: '',
         current: 1,
@@ -188,6 +231,13 @@ export default {
           { required: true, message: '请输入邮箱', trigger: 'blur' },
           { validator: checkEmail, trigger: 'blur' }
         ]
+      },
+      // 分配角色表单数据对象
+      assignRoleForm: {
+        id: '',
+        username: '',
+        roleIds: [],
+        rolesList: []
       }
     }
   },
@@ -241,10 +291,7 @@ export default {
       this.$refs.addUserFormRef.validate(async valid => {
         if (!valid) return
         // 校验通过发起请求
-        // addUser(this.addUserForm).then(res =>{
-        //     console.log(res);
-        // })
-        
+ 
         const {data: res} = await addUser(this.addUserForm)
         // const { data: res } = await this.$http.post('sys/user/save/', this.addUserForm)
         if (res.code !== 200) {
@@ -320,7 +367,50 @@ export default {
       // 重新获取数据列表
       this.getUserList()
 
-    }
+    },
+
+     // 分配权限
+       async assignRole(id) {
+          const { data: res } = await getUserInfo(id)
+          // console.log(res);
+          this.assignRoleForm = res.data
+            // this.userInfo = userInfo
+            // console.log(this.assignRoleForm)
+            // // 获取所有角色列表
+            getRoles().then(res => {
+                // console.log(res)
+                if(res.data.code !== 200) return this.$message.error('获取权限列表失败')
+                this.rolesList = res.data.data
+                // console.log(this.rolesList);
+            })
+
+            this.roleDialogVisible = true
+           
+        },
+
+        roleClose() {
+            this.selectedRoleId = ''
+            this.userInfo = {}
+        },
+
+        savaRoleInfo() {
+          // console.log( this.selectedRoleId instanceof Array)
+          let newRoleIdsList = this.assignRoleForm.roleIds.concat(this.selectedRoleId)
+          let newRoleIds = newRoleIdsList.join(',')
+          // console.log(newRoleIds.join(','));
+          let idStr = this.selectedRoleId.join(',')
+          // console.log(...this.assignRoleForm.roleIds + idStr);
+            assignRoles(this.assignRoleForm.id,newRoleIds).then(res => {
+              // console.log(res);
+                if(res.data.code !== 200) return this.$message.error('分配角色失败')
+                this.$message.success('分配角色成功')
+                this.getUserList()
+            })
+           this.roleDialogVisible = false
+        },
+
+
+
   }
 }
 </script>

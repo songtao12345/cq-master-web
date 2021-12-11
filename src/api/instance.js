@@ -11,6 +11,7 @@ export default {
             data
         })
     },
+  
 
     // 撤回申请
     cancelApply(params) {
@@ -48,8 +49,22 @@ export default {
 
     // 获取流程审批历史图
     getHistoryProcessImage(procInstId) {
-        return process.env.VUE_APP_BASE_URL + `/instance/history/image?procInstId=${procInstId}&t=`+Math.random()
+        // console.log(process.env.VUE_APP_BASE_URL + `instance/history/image?procInstId=${procInstId}&t=`+Math.random());
+        // debugger
+        // let url = process.env.VUE_APP_BASE_URL + `instance/history/image?procInstId=${procInstId}&t=`+Math.random()
+        // return request({
+        //     url :url,
+        //     method: 'get'
+        // })
+        return process.env.VUE_APP_BASE_URL + `instance/history/image?procInstId=${procInstId}&t=`+Math.random()
     },
+
+    // getHistoryProcessImage(procInstId) {
+    //     return request({
+    //         url: process.env.VUE_APP_BASE_URL +`instance/history/image?procInstId=${procInstId}&t=`+Math.random(),
+    //         method: 'get'
+    //     })
+    // },
 
     // 查询正在运行的流程实例列表
     getProcInstListRunning(data, current, size) {

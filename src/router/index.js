@@ -75,33 +75,39 @@ export const constantRoutes = [
   //   ]
   // },
 
-  // {
-  //   path: '/apply',
-  //   component: Layout,
-  //   redirect: '/apply/leave',
-  //   name: 'Apply',
-  //   meta: { title: '业务办理', icon: 'form' },
-  //   children: [
-  //     {
-  //       path: 'leave',
-  //       name: 'Leave',
-  //       component: () => import('@/views/workflow/apply/leave'),
-  //       meta: { title: '请假申请', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'loan',
-  //       name: 'Loan',
-  //       component: () => import('@/views/workflow/apply/loan'),
-  //       meta: { title: '借款申请', icon: 'table' }
-  //     },
-  //     {
-  //       path: 'oil',
-  //       name: 'OldOilProd',
-  //       component:() => import('@/views/workflow/apply/oil'),
-  //       meta: { title: '老油田稳产方案', icon: 'table' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/applyy',
+    component: Layout,
+    redirect: '/applyy/annual',
+    name: 'Applyy',
+    meta: { title: '业务办理', icon: 'form' },
+    children: [
+      // {
+      //   path: 'leave',
+      //   name: 'Leave',
+      //   component: () => import('@/views/workflow/apply/leave'),
+      //   meta: { title: '请假申请', icon: 'table' }
+      // },
+      // {
+      //   path: 'loan',
+      //   name: 'Loan',
+      //   component: () => import('@/views/workflow/apply/loan'),
+      //   meta: { title: '借款申请', icon: 'table' }
+      // },
+      {
+        path: 'annual',
+        name: 'Annual',
+        component:() => import('@/views/workflow/apply/annual'),
+        meta: { title: '年度开发计划', icon: 'table' }
+      },
+      {
+        path: 'disposal',
+        name: 'Disposal',
+        component:() => import('@/views/workflow/apply/disposal'),
+        meta: { title: '油气资产弃置流程', icon: 'table' }
+      }
+    ]
+  },
 
   // {
   //   path: '/task',

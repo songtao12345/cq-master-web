@@ -98,10 +98,11 @@ export default {
             async getById() {
             const {data} = await api.getById(this.businessKey)
             // console.log(data);
+            // const data = res.data
             // 格式化时间
-            data.leaveDate = [ data.startDate, data.endDate]
-            this.formData = data
-            this.fileObj.name = data.oldName
+            data.data.leaveDate = [ data.data.startDate, data.data.endDate]
+            this.formData = data.data
+            this.fileObj.name = data.data.oldName
             this.files.push(this.fileObj)
             // console.log(this.files);
             },

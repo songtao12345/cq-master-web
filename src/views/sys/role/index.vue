@@ -32,9 +32,11 @@
         <el-table-column label="角色描述" min-width="160" prop="remark"></el-table-column>
         <el-table-column label="操作" min-width="160">
           <template slot-scope="scope">
-            <el-button type="success" icon="el-icon-star-off" size="mini" @click="assignPermission(scope.row)"></el-button>
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditRoleDialog(scope.row.id)"></el-button>
             <el-button type="danger" :disabled="scope.row.name == '超级管理员' || scope.row.name == '普通管理员'" icon="el-icon-delete" size="mini" @click="removeRoles(scope.row.id)"></el-button>
+             <el-tooltip class="item" effect="dark" content="分配权限" placement="top" :enterable="false" >
+            <el-button type="warning" icon="el-icon-star-off" size="mini" @click="assignPermission(scope.row)"></el-button>
+             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>

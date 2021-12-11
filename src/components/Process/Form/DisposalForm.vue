@@ -62,12 +62,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import api from '@/api/oil'
-// import qs from 'qs'
-// import apii from './formapi/oilform'
+import api from '@/api/disposal'
 export default {
-    name: 'OldOilProdForm',
+    name: 'DisposalForm',
     props: {
         operate: { //操作标识：新增，编辑，详情
             type: String,

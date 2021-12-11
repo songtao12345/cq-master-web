@@ -101,7 +101,8 @@ export default {
                             assigneeMap: this.formData.assigneeMap // 审批人转为数组
                       }
                       let response = await api.completeTask(data)
-                      if(response.code === 200) {
+    
+                      if(response.data.code === 200) {
                           // 刷新数据
                           this.$parent.fetchData()
                           this.$message.success('提交成功')

@@ -116,8 +116,10 @@ export default {
     methods: {
         // 分页条件查询文章列表
         async fetchData() {
+            console.log(this.page.current, this.page.size);
             const { data } = await api.getWaitTaskList(this.query, this.page.current, this.page.size)
-            this.list = data.records
+            this.list = data.data.records
+             console.log(this.list);
             this.page.total = data.total
         },
 
@@ -185,9 +187,10 @@ export default {
        async clickClaim(taskId) {
            this.loading = true
            try {
-                const {code} = await api.claimTask( {taskId} )
+                const {data} = await api.claimTask( {taskId} )
+                console.log(data);
                 this.loading = false
-                if(code === 200) {
+                if(data.code === 200) {
                     // 刷新数据
                     this.fetchData()
                     this.$message.success('签收成功')

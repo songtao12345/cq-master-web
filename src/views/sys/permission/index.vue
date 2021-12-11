@@ -6,7 +6,7 @@
       <el-row class="title" >
         <el-col :span="20">权限列表</el-col>
         <el-col :span="4">
-          <el-button type="primary" icon="el-icon-plus" size="mini" @click="showAddPermissionDialog">新增</el-button>
+          <!-- <el-button type="primary" icon="el-icon-plus" size="mini" @click="showAddPermissionDialog">新增</el-button> -->
         </el-col>
       </el-row>
       <!--      搜索框表单-->
@@ -36,12 +36,12 @@
               <el-tag v-if="scope.row.level === 2">二级</el-tag>
             </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="160">
+        <!-- <el-table-column label="操作" min-width="160">
           <template slot-scope="scope">
             <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditPermissionDialog(scope.row.id)"></el-button>
             <el-button type="danger"  icon="el-icon-delete" size="mini" @click="removePermission(scope.row.id)"></el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </el-card>
 
@@ -62,6 +62,15 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="addPermissionForm.title"></el-input>
         </el-form-item>
+         <el-form-item label="路由地址" prop="path">
+            <el-input placeholder="路由地址(/:path)" v-model="addPermissionForm.path"></el-input>
+          </el-form-item>
+          <el-form-item label="上级类目" prop="pid">
+            <el-cascader :options="permissionList" 
+              v-model="addPermissionForm.parentId" :show-all-levels='false' 
+              :props="{ checkStrictly: true,label:'title',value:'id' }"
+                         clearable></el-cascader>
+          </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="addPermissionDialogVisible = false">取 消</el-button>
@@ -90,7 +99,8 @@ export default {
           title: [
             { required: true, message: '请输入权限名称', trigger: 'blur' },
             { min: 1, max: 10, message: '权限名称的长度在1到10之间', trigger: 'blur' }
-          ]
+          ],
+          path: [{ required: true, message: '请输入组件路径', trigger: 'blur' }],
          
         },
 
@@ -106,6 +116,8 @@ export default {
         showAddPermissionDialog() {
         this.addPermissionDialogVisible = true
         // this.getPermissionList()
+        // console.log(this.permissionList);
+       
         },
          // 获取权限列表
         async getPermissionList() {
@@ -116,8 +128,40 @@ export default {
         }
         // debugger
         this.permissionList = res.data
+
+          function  clearDeep(obj) {
+    if (!obj || !typeof obj === 'object') return
+ 
+    const keys = Object.keys(obj)
+    for (var key of keys) {
+      const val = obj[key]
+      if (
+        typeof val === 'undefined' ||
+        ((typeof val === 'object' || typeof val === 'string') && !val)
+      ) {
+        // 如属性值为null或undefined或''，则将该属性删除
+        if(key === 'children'){
+            delete obj[key]
+        }
+      
+      } else if (typeof val === 'object') {
+        // 属性值为对象，递归调用
+        clearDeep(obj[key])
+ 
+        if (Object.keys(obj[key]).length === 0) {
+          // 如某属性的值为不包含任何属性的独享，则将该属性删除
+          delete obj[key]
+        }
+      }
+    }
+    return obj
+
+          }
+          this.permissionList.forEach(item=>{
+            return clearDeep(item)
+          })
         // console.log(this.permissionList);
-        
+
         },
          // 搜索框的重置方法
         resetSearch() {
