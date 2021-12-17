@@ -95,7 +95,7 @@ export default {
         async fetchData() {
             const { data } = await api.getCompleteTaskList(this.query, this.page.current, this.page.size)
             this.list = data.data.records
-            this.page.total = data.total
+            this.page.total = data.data.total
         },
 
         // 当每页显示多少条改变后触发

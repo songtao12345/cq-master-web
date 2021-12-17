@@ -1,13 +1,13 @@
 import request from '@/utils/request'
 
-// 油气资产弃置流程管理
+// 石油合作项目操作费预算
 export default {
   
   // 新增申请
 
   add(data,obj) {
     return request({
-        url: `/doaa?title=${obj.title}&description=${obj.description}`,
+        url: `/dpp?title=${obj.title}&description=${obj.description}`,
         method: 'post',
         data
     })
@@ -17,7 +17,7 @@ export default {
   // 申请列表
   getList(data, current, size) {
     return request({
-        url: '/doaa/list',
+        url: '/dpp/list',
         method: 'post',
         data: {...data, current, size}
     })
@@ -29,7 +29,7 @@ export default {
   // 查询详情
   getById(id) {
     return request({
-        url: `/doaa/${id}`,
+        url: `/dpp/${id}`,
         method: 'get'
     })
   },
@@ -37,7 +37,7 @@ export default {
   // 修改申请
   update(data) {
     return request({
-        url: '/doaa',
+        url: '/dpp',
         method: 'put',
         data
     })
@@ -46,18 +46,18 @@ export default {
    // 上传文件
    upLoadFile(data) {
       return request({
-          url: `/doaa/upload`,
+          url: `/dpp/upload`,
           method: 'post',
           data
       })
    },
 
-    //下载文件
-    downLoadFile(id){
-      return request({
-          url: `/doaa/download/${id}`,
-          method: 'get'
-      })
-  }
+   //下载文件
+   downLoadFile(id){
+       return request({
+           url: `/dpp/download/${id}`,
+           method: 'get'
+       })
+   }
 
 }

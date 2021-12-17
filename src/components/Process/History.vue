@@ -57,7 +57,8 @@ export default {
         currProcessForm: null, // 当前流程表单组件
       }
     },
-    // mounted(){
+    mounted(){
+      // console.log(res_components);
     //   axios.get('http://172.20.10.3:8888/instance/history/image?procInstId=3a67fd10-5997-11ec-ac3a-00e04c886b28&t=0.5795287870268571',{
     //     headers:{
     //       'token':'eyJhbGciOiJIUzUxMiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSSkzJzcxT0lFKrShQsjI0M7Y0MjIwNTGpBQAyXfvaIAAAAA.PlnYUJbxxuciTo0buRs4LLWOfgrZSJBZn5A862X7na1ogIcMOktG3Zjd7m59AWdRdKTiuL13mM_ICkomkFWb6g'
@@ -66,7 +67,7 @@ export default {
     //     console.log(res);
     //     this.url = res.data
     //   })
-    // },
+    },
     watch: {
       visible(newVal) {
           if(newVal) {
@@ -108,6 +109,7 @@ export default {
               const {data} = await api.getFormNameByProcInstId(this.processInstanceId)
               console.log(data);
               this.currProcessForm = data.data
+              // console.log(this.currProcessForm);
               this.loading = false
           } catch (error) {
               this.loading = false

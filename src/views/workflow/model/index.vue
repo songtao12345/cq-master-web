@@ -42,17 +42,16 @@
                 </template>
             </el-table-column>
         </el-table>
-
-        <!-- 分页组件 -->
-         <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="page.current"
-            :page-sizes="[10, 20, 50]"
-            :page-size="page.size"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="page.total">
-        </el-pagination>
+         <!-- 分页组件 -->
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="page.current"
+                :page-sizes="[5, 10, 20]"
+                :page-size="page.size"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="page.total">
+            </el-pagination>
 
         <!-- 新增模型 -->
         <add ref="addModel" />
@@ -112,7 +111,7 @@ export default {
             // console.log(data);
             this.list = data.data.records
             console.log(this.list);
-            this.page.total = data.total
+            this.page.total = data.data.total
         },
 
         // 当每页显示多少条改变后触发

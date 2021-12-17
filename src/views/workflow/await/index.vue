@@ -33,6 +33,7 @@
                     <el-button v-if="row.taskAssignee" type="text" @click="clickBack(row)">驳回</el-button>
                     <!-- <el-button v-if="row.taskAssignee" type="text" @click="clickTurn(row)">转办</el-button> -->
                     <el-button type="text" @click="clickProcessHistory(row)">审批历史</el-button>
+                    <el-button type="text" @click="download(row)">下载</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -120,7 +121,7 @@ export default {
             const { data } = await api.getWaitTaskList(this.query, this.page.current, this.page.size)
             this.list = data.data.records
              console.log(this.list);
-            this.page.total = data.total
+            this.page.total = data.data.total
         },
 
         // 当每页显示多少条改变后触发
@@ -183,6 +184,11 @@ export default {
             this.$refs.historyRef.visible = true
         },
 
+        // 下载
+        download(row){
+            console.log(row);
+
+        },
         // 点击签收
        async clickClaim(taskId) {
            this.loading = true

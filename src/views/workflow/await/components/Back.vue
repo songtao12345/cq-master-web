@@ -46,8 +46,9 @@ export default {
             this.options = []
             // 查询可驳回节点
             const {data} = await api.getBackNodes(this.task.taskId)
-            this.formData.targetActivityId = data[0].activityId
-            this.options = data
+            console.log(data);
+            this.formData.targetActivityId = data.data[0].activityId
+            this.options = data.data
           }
       }
     },
@@ -62,7 +63,8 @@ export default {
                     try {
                       const params = {taskId: this.task.taskId, targetActivityId: this.formData.targetActivityId }
                       let response = await api.backTask(params)
-                      if(response.code === 200) {
+                    //   console.log(response);
+                      if(response.data.code === 200) {
                           // 刷新数据
                           this.$parent.fetchData()
                           this.$message.success('提交成功')

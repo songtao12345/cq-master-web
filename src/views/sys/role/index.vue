@@ -40,6 +40,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页组件 -->
+      <!-- <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.current"
+        :page-sizes="[5, 10, 20]"
+        :page-size="queryInfo.size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="queryInfo.total">
+      </el-pagination> -->
+
     </el-card>
     <!--    新增对话框-->
     <el-dialog
@@ -54,15 +65,6 @@
         <el-form-item label="角色描述" prop="remark">
           <el-input v-model="addRoleForm.remark"></el-input>
         </el-form-item>
-        <!--树形控件  -->
-        <!-- <el-tree
-          :data = "permissionlist"
-          :props="treeProps"
-          show-checkbox
-          node-key="id"
-          default-expand-all
-          :default-checked-keys = "defKeys"
-          ref = "treeRef"></el-tree> -->
       </el-form>
       <span slot="footer" class="dialog-footer">
     <el-button @click="addRoleDialogVisible = false">取 消</el-button>
@@ -122,6 +124,11 @@ export default {
   data() {
     return {
       isCheck: false,
+      queryInfo: {
+        current: 1,
+        size: 10,
+        total: 0
+      },
       // 角色列表
       rolelist: [],
       // 查询数据
@@ -172,6 +179,19 @@ export default {
     this.getRoleList()
   },
   methods: {
+    // 当每页显示多少条改变后触发
+    // handleSizeChange(val) {
+    //   console.log(val);
+    //   this.queryInfo.size = val
+    //   // this.page.size = val
+    //   this.getRoleList()
+    // },
+    // // 切换页码触发
+    // handleCurrentChange(val) {
+    //   this.queryInfo.current = val
+    //   // this.page.current = val
+    //   this.getRoleList()
+    // },
     // 获取角色列表
     async getRoleList() {
       const {data : res} = await getRoles(this.query)
@@ -353,26 +373,7 @@ export default {
 
       })
 
-
-          // const { data: res } = await getRolesInfo(row.id)
-
-      // // const { data: res } = await this.$http.post('sys/role/detail/', id)
-      // console.log(res)
-      // if (res.code !== 200) {
-      //   this.$message.error('获取角色信息失败')
-      // }
-      // // 将返回数据放到编辑表单中
-      // this.editRoleForm = res.data
-      // this.editRoleDialogVisible = true
-
-      // let arr = row.perIds.split(',')
-      // this.isCheck = true
-      // console.log(arr);
-      // this.defKeys = arr
-      // setTimeout(() => {
-      //   this.isCheck = false
-      // }, 500);
-    }
+    },
 
   }
 }

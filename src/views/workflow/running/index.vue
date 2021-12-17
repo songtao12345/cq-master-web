@@ -118,8 +118,9 @@ export default {
         // 分页条件查询列表
         async fetchData() {
             const { data } = await api.getProcInstListRunning(this.query, this.page.current, this.page.size)
-            this.list = data.records
-            this.page.total = data.total
+            // console.log(data);
+            this.list = data.data.records
+            this.page.total = data.data.total
         },
 
         // 当每页显示多少条改变后触发

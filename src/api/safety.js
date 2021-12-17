@@ -1,13 +1,13 @@
 import request from '@/utils/request'
 
-// 油气资产弃置流程管理
+// 安全生产费用使用计划
 export default {
   
   // 新增申请
 
   add(data,obj) {
     return request({
-        url: `/doaa?title=${obj.title}&description=${obj.description}`,
+        url: `/uospf?title=${obj.title}&description=${obj.description}`,
         method: 'post',
         data
     })
@@ -17,7 +17,7 @@ export default {
   // 申请列表
   getList(data, current, size) {
     return request({
-        url: '/doaa/list',
+        url: '/uospf/list',
         method: 'post',
         data: {...data, current, size}
     })
@@ -29,7 +29,7 @@ export default {
   // 查询详情
   getById(id) {
     return request({
-        url: `/doaa/${id}`,
+        url: `/uospf/${id}`,
         method: 'get'
     })
   },
@@ -37,7 +37,7 @@ export default {
   // 修改申请
   update(data) {
     return request({
-        url: '/doaa',
+        url: '/uospf',
         method: 'put',
         data
     })
@@ -46,7 +46,7 @@ export default {
    // 上传文件
    upLoadFile(data) {
       return request({
-          url: `/doaa/upload`,
+          url: `/uospf/upload`,
           method: 'post',
           data
       })
@@ -55,7 +55,7 @@ export default {
     //下载文件
     downLoadFile(id){
       return request({
-          url: `/doaa/download/${id}`,
+          url: `/uospf/download/${id}`,
           method: 'get'
       })
   }

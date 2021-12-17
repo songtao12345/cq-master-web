@@ -53,6 +53,12 @@
 
 
             </el-form-item>
+             <!-- <el-form-item label="是否内部项目" prop="inside">
+                 <template>
+                    <el-radio v-model="formData.type" label="1">是</el-radio>
+                    <el-radio v-model="formData.type" label="0">否</el-radio>
+                </template>
+             </el-form-item> -->
             <el-form-item align="right" v-if="operate != '详情'">
                 <el-button  type="primary" @click="submitForm('formData')" size="small">确定</el-button>
                 <!-- <el-button  type="primary" @click="save('formData')" size="small">确定</el-button> -->
@@ -62,12 +68,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import api from '@/api/oil'
-// import qs from 'qs'
+import api from '@/api/operation'
 export default {
-    // name: "OldOilProdForm",
-    name: "OilForm",
+    name: 'OperationForm',
     props: {
         operate: { //操作标识：新增，编辑，详情
             type: String,
@@ -87,6 +90,7 @@ export default {
     },
     data() {
         return {
+            // radio: '0',
             loading: false,
             rules: {
                 title: [
@@ -96,7 +100,7 @@ export default {
             formData: { // 提交表单数据
                 // leaveType: 1,
                 // duration: 0, // 请假时长（小时）
-               
+                type: '0'
             }, 
             file:null,
             files: [
@@ -134,8 +138,10 @@ export default {
                                     this.file.append("file", this.fileList[i].raw, this.fileList[i].name);
                                 }
                                 this.file.append('uploadrole', "lizy");
-                                    response = await api.add(this.file,this.formData)
-                                    console.log(response);
+                                console.log(this.formData);
+                                console.log(this.formData.type);
+                                response = await api.add(this.file,this.formData)
+                                // console.log(response);
 
 
                             // response = await api.addmany(this.formData.title.this.formData.description)

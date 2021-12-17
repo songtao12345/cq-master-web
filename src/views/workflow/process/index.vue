@@ -67,7 +67,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="page.current"
-            :page-sizes="[10, 20, 50]"
+            :page-sizes="[5, 10, 20]"
             :page-size="page.size"
             layout="total, sizes, prev, pager, next, jumper"
             :total="page.total">
@@ -151,7 +151,7 @@ export default {
             const { data } = await api.getList(this.query, this.page.current, this.page.size)
             console.log(data);
             this.list = data.data.records
-            this.page.total = data.total
+            this.page.total = data.data.total
         },
 
         // 当每页显示多少条改变后触发

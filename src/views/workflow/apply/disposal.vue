@@ -58,22 +58,25 @@
             <disposal-form :operate="operate" :businessKey="row.id" @close="closeForm"></disposal-form>
         </el-dialog>
         <!-- 撤回申请 -->
-        <!-- <cancel-apply ref="cancelRef" :businessKey="row.id" :procInstId="row.processInstanceId"></cancel-apply> -->
+        <cancel-apply ref="cancelRef" :businessKey="row.id" :procInstId="row.processInstanceId"></cancel-apply>
 
          <!-- 审批历史 -->
-        <!-- <history ref="historyRef" :businessKey="row.id" :processInstanceId="row.processInstanceId" ></history> -->
+        <history ref="historyRef" :businessKey="row.id" :processInstanceId="row.processInstanceId" ></history>
 
-         <!-- 老油田稳产表单详情信息 -->
-        <!-- <el-dialog v-dialogDrag :title="operate" :visible.sync="detailFormVisible" @close="closeForm(false)" width="1000px" destroy-on-close>
-            <oil-detail :operate="operate" :businessKey="row.id" @close="closeForm"></oil-detail>
-        </el-dialog> -->
+         <!-- 油气资产弃置表单详情信息 -->
+        <el-dialog v-dialogDrag :title="operate" :visible.sync="detailFormVisible" @close="closeForm(false)" width="1000px" destroy-on-close>
+            <disposal-detail :operate="operate" :businessKey="row.id" @close="closeForm"></disposal-detail>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 import api from '@/api/disposal'
 import apiIns from '@/api/instance'
+import DisposalDetail from './components/DisposalDetail'
 import DisposalForm from '@/components/Process/Form/DisposalForm'
+import CancelApply from './components/CancelApply'
+import History from '@/components/Process/History'
 // 流程状态
 const processStatus = [
     {value: 0, label: '已撤回'},
@@ -86,7 +89,10 @@ const processStatus = [
 export default {
     name: 'Disposal',
     components:{
-        DisposalForm
+        DisposalForm,
+        DisposalDetail,
+        CancelApply,
+        History
     },
      data() {
         return {
@@ -173,7 +179,7 @@ export default {
                         }
                         // console.log(data);
                     apiIns.startProcessApply(data).then(res => {
-                    // console.log(res);
+                    console.log(res);
                     if(res.data.code !== 200) return this.$message.error('申请失败')
                     this.$message.success('申请成功!')
                     this.fetchData()
@@ -185,6 +191,26 @@ export default {
                 message: '已取消申请'
             });          
             });
+        },
+
+          // 详情页
+        clickDetailShowForm(operate, row = {}) {
+            this.operate = operate
+            this.row = row
+            this.detailFormVisible = true
+        },
+
+          // 撤回申请
+        clickCancelProcess(row) {
+            this.row = row
+            this.$refs.cancelRef.visible = true
+        },
+
+           // 点击审批进度
+        clickProcessHistory(row) {
+            this.row = row
+            this.$refs.historyRef.visible = true
+
         },
 
 

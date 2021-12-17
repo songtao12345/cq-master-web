@@ -50,6 +50,14 @@ export default {
           method: 'post',
           data
       })
+   },
+
+  //下载文件
+  downLoadFile(id){
+      return request({
+          url: `/adp/download/${id}`,
+          method: 'get'
+      })
    }
 
 }

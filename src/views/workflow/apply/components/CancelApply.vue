@@ -47,6 +47,7 @@ export default {
                             message: this.formData.message
                       }
                       let response = await api.cancelApply(params)
+                    //   console.log(response);
                       if(response.data.code == 200) {
                           // 刷新数据
                           this.$parent.fetchData()

@@ -58,22 +58,25 @@
             <annual-form :operate="operate" :businessKey="row.id" @close="closeForm"></annual-form>
         </el-dialog>
         <!-- 撤回申请 -->
-        <!-- <cancel-apply ref="cancelRef" :businessKey="row.id" :procInstId="row.processInstanceId"></cancel-apply> -->
+        <cancel-apply ref="cancelRef" :businessKey="row.id" :procInstId="row.processInstanceId"></cancel-apply>
 
          <!-- 审批历史 -->
-        <!-- <history ref="historyRef" :businessKey="row.id" :processInstanceId="row.processInstanceId" ></history> -->
+        <history ref="historyRef" :businessKey="row.id" :processInstanceId="row.processInstanceId" ></history>
 
-         <!-- 老油田稳产表单详情信息 -->
-        <!-- <el-dialog v-dialogDrag :title="operate" :visible.sync="detailFormVisible" @close="closeForm(false)" width="1000px" destroy-on-close>
-            <oil-detail :operate="operate" :businessKey="row.id" @close="closeForm"></oil-detail>
-        </el-dialog> -->
+         <!-- 年度开发计划表单详情信息 -->
+        <el-dialog v-dialogDrag :title="operate" :visible.sync="detailFormVisible" @close="closeForm(false)" width="1000px" destroy-on-close>
+            <annual-detail :operate="operate" :businessKey="row.id" @close="closeForm"></annual-detail>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 import api from '@/api/annual'
 import apiIns from '@/api/instance'
+import AnnualDetail from './components/AnnualDetail'
+import CancelApply from './components/CancelApply'
 import AnnualForm from '@/components/Process/Form/AnnualForm'
+import History from '@/components/Process/History'
 // 流程状态
 const processStatus = [
     {value: 0, label: '已撤回'},
@@ -86,7 +89,10 @@ const processStatus = [
 export default {
     name: 'Annual',
     components:{
-        AnnualForm
+        AnnualForm,
+        AnnualDetail,
+        CancelApply,
+        History
     },
      data() {
         return {
@@ -185,6 +191,26 @@ export default {
                 message: '已取消申请'
             });          
             });
+        },
+
+          // 详情页
+        clickDetailShowForm(operate, row = {}) {
+            this.operate = operate
+            this.row = row
+            this.detailFormVisible = true
+        },
+
+          // 撤回申请
+        clickCancelProcess(row) {
+            this.row = row
+            this.$refs.cancelRef.visible = true
+        },
+
+          // 点击审批进度
+        clickProcessHistory(row) {
+            this.row = row
+            this.$refs.historyRef.visible = true
+
         },
 
 

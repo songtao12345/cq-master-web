@@ -29,7 +29,8 @@
       <el-table :data = "userlist" border stripe>
         <el-table-column fixed align="center" type="index" label="序号" width="50"></el-table-column>
         <el-table-column label="用户名" min-width="160" prop="username"></el-table-column>
-        <el-table-column label="昵称" min-width="160" prop="nickName"></el-table-column>
+        <el-table-column label="部门名" min-width="160" prop="depName"></el-table-column>
+        <!-- <el-table-column label="昵称" min-width="160" prop="nickName"></el-table-column> -->
         <el-table-column label="手机号" min-width="160" prop="mobile"></el-table-column>
         <!-- <el-table-column label="角色" min-width="140"></el-table-column> -->
         <el-table-column label="操作" min-width="160">
@@ -47,7 +48,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.current"
-        :page-sizes="[10, 20, 50]"
+        :page-sizes="[5, 10, 20]"
         :page-size="queryInfo.size"
         layout="total, sizes, prev, pager, next, jumper"
         :total="queryInfo.total">
@@ -62,6 +63,9 @@
       <el-form :model="addUserForm" :rules="addUserFormRules" ref="addUserFormRef" label-width="100px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="addUserForm.username"></el-input>
+        </el-form-item>
+         <el-form-item label="部门" prop="depName">
+          <el-input v-model="addUserForm.depName"></el-input>
         </el-form-item>
          <el-form-item label="密码" prop="password">
           <el-input v-model="addUserForm.password"></el-input>
@@ -90,6 +94,9 @@
       <el-form :model="editUserForm" :rules="editUserFormRules" ref="editUserFormRef" label-width="100px">
         <el-form-item label="用户名称" prop="username">
           <el-input v-model="editUserForm.username" disabled></el-input>
+        </el-form-item>
+         <el-form-item label="部门名称" prop="username">
+          <el-input v-model="editUserForm.depName" disabled></el-input>
         </el-form-item>
         <el-form-item label="用户昵称" prop="nickName">
           <el-input v-model="editUserForm.nickName"></el-input>
@@ -204,6 +211,9 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 2, max: 10, message: '用户名的长度在2到10之间', trigger: 'blur' }
         ],
+        depName: [
+           { required: true, message: '请输入部门名', trigger: 'blur' }
+        ],
         nickName: [
           { required: true, message: '请输入用户昵称', trigger: 'blur' }
         ],
@@ -269,12 +279,15 @@ export default {
     },
     // 当每页显示多少条改变后触发
     handleSizeChange(val) {
-      this.page.size = val
+      // console.log(val);
+      this.queryInfo.size = val
+      // this.page.size = val
       this.getUserList()
     },
     // 切换页码触发
     handleCurrentChange(val) {
-      this.page.current = val
+      this.queryInfo.current = val
+      // this.page.current = val
       this.getUserList()
     },
     // 展示新增用户对话框
@@ -291,7 +304,7 @@ export default {
       this.$refs.addUserFormRef.validate(async valid => {
         if (!valid) return
         // 校验通过发起请求
- 
+        console.log(this.addUserForm);
         const {data: res} = await addUser(this.addUserForm)
         // const { data: res } = await this.$http.post('sys/user/save/', this.addUserForm)
         if (res.code !== 200) {

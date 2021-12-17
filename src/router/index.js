@@ -95,17 +95,77 @@ export const constantRoutes = [
       //   meta: { title: '借款申请', icon: 'table' }
       // },
       {
-        path: 'annual',
-        name: 'Annual',
-        component:() => import('@/views/workflow/apply/annual'),
-        meta: { title: '年度开发计划', icon: 'table' }
+        path: 'safety',
+        name: 'Safety',
+        component:() => import('@/views/workflow/apply/safety'),
+        meta: { title: '安全生产费用使用计划', icon: 'table' }
       },
       {
-        path: 'disposal',
-        name: 'Disposal',
-        component:() => import('@/views/workflow/apply/disposal'),
-        meta: { title: '油气资产弃置流程', icon: 'table' }
-      }
+        path: 'joint',
+        name: 'Joint',
+        component:() => import('@/views/workflow/apply/joint'),
+        meta: { title: '召开联管会', icon: 'table' }
+      },
+      {
+        path: 'crude',
+        name: 'Crude',
+        component:() => import('@/views/workflow/apply/crude'),
+        meta: { title: '原油结算', icon: 'table' }
+      },
+      {
+        path: 'cooperative',
+        name: 'Cooperative',
+        component:() => import('@/views/workflow/apply/cooperative'),
+        meta: { title: '合作区块筛选及报批', icon: 'table' }
+      },
+      {
+        path: 'bid',
+        name: 'Bid',
+        component:() => import('@/views/workflow/apply/bid'),
+        meta: { title: '合作方招标', icon: 'table' }
+      },
+      {
+        path: 'contract',
+        name: 'Contract',
+        component:() => import('@/views/workflow/apply/contract'),
+        meta: { title: '合同管理流程', icon: 'table' }
+      },
+      {
+        path: 'approval',
+        name: 'Approval',
+        component:() => import('@/views/workflow/apply/approval'),
+        meta: { title: '合作项目管理', icon: 'table' }
+      },
+      {
+        path: 'salary',
+        name: 'Salary',
+        component:() => import('@/views/workflow/apply/salary'),
+        meta: { title: '薪酬管理标准和实施细则', icon: 'table' }
+      },
+      {
+        path: 'scrap',
+        name: 'Scrap',
+        component:() => import('@/views/workflow/apply/scrap'),
+        meta: { title: '油水井资产报废流程', icon: 'table' }
+      },
+      {
+        path: 'declare',
+        name: 'Declare',
+        component:() => import('@/views/workflow/apply/declare'),
+        meta: { title: '项目申报与审批', icon: 'table' }
+      },
+      {
+        path: 'audit',
+        name: 'Audit',
+        component:() => import('@/views/workflow/apply/audit'),
+        meta: { title: '合作项目年度审计', icon: 'table' }
+      },
+      {
+        path: 'operation',
+        name: 'Operation',
+        component:() => import('@/views/workflow/apply/operation'),
+        meta: { title: '石油合作项目操作费预算', icon: 'table' }
+      },
     ]
   },
 
