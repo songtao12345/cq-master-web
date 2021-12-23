@@ -4,6 +4,9 @@
             <el-form-item v-if="operate == '详情'" label="申请人" prop="supplyDate">
                 <span>{{formData.username}}</span>
             </el-form-item> 
+             <el-form-item v-if="operate !== '新增'" label="申请部门" prop="depName">
+                <el-input type="text" disabled v-model="formData.depName" maxlength="100" show-word-limit></el-input>
+            </el-form-item>
            
 
             <!-- <el-form-item label="申请部门" prop="applyDep">
@@ -164,6 +167,7 @@ export default {
             this.$emit('close', refresh)
         },
         async getById() {
+         
             const {data} = await api.getById(this.businessKey)
             // console.log(data);
             // 格式化时间
@@ -206,7 +210,8 @@ export default {
         // console.log(file, fileList + 'handleremove');
         },
         handlePreview(file) {
-        // console.log(file + 'prev');
+        // console.log(file);
+ 
         },
         // 限制上传数量弹出框
          masterFileMax(files, fileList) {

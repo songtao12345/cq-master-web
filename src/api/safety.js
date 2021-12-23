@@ -7,7 +7,7 @@ export default {
 
   add(data,obj) {
     return request({
-        url: `/uospf?title=${obj.title}&description=${obj.description}`,
+        url: `/uospf?title=${obj.title}&description=${obj.description}&duration=${obj.duration}`,
         method: 'post',
         data
     })

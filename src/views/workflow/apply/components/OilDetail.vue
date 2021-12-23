@@ -96,6 +96,7 @@ export default {
     },
     methods: {
             async getById() {
+            console.log(this.businessKey);
             const {data} = await api.getById(this.businessKey)
             // console.log(data);
             // const data = res.data

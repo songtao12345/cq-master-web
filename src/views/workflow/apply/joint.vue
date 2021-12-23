@@ -47,9 +47,21 @@
                     <el-button v-if="row.status == 0" @click="clickSubmit(row)" type="text" >重新申请</el-button>
                     <el-button v-if="row.status == 1" @click="clickSubmit(row)" type="text" >提交申请</el-button>
                     <el-button v-if="row.status == 2 || row.status == 3 || row.status == 4" @click="clickProcessHistory(row)" type="text" >审批历史</el-button>
+                    <el-button type="text" @click="download(row)">下载</el-button>
                 </template>
             </el-table-column>
         </el-table>
+
+         <!-- 分页组件 -->
+         <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="page.current"
+            :page-sizes="[5, 10, 20]"
+            :page-size="page.size"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="page.total">
+        </el-pagination>
 
 
 
@@ -211,6 +223,24 @@ export default {
             this.row = row
             this.$refs.historyRef.visible = true
 
+        },
+
+             // 当每页显示多少条改变后触发
+        handleSizeChange(val) {
+            console.log(val);
+            this.page.size = val
+            this.fetchData()
+        },
+        // 切换页码触发
+        handleCurrentChange(val) {
+            this.page.current = val
+            this.fetchData()
+        },
+
+         // 下载
+        download(row){
+        console.log(typeof(row.id));
+        window.open('http://localhost:9528/hjmm/download/'+row.id)
         },
 
 

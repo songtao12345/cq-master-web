@@ -61,7 +61,7 @@ export default {
      * @param {*} definitionId 流程定义id
      */
     getProcessFileURL(type, definitionId) {
-        return process.env.VUE_APP_BASE_URL + `/process/export/${type}/${definitionId}`
+        return process.env.VUE_APP_BASE_URL + `process/export/${type}/${definitionId}`
     },
 
     

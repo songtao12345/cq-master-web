@@ -4,6 +4,10 @@
             <el-form-item v-if="operate == '详情'" label="申请人" prop="supplyDate">
                 <span>{{formData.username}}</span>
             </el-form-item> 
+
+             <el-form-item v-if="operate !== '新增'" label="申请部门" prop="depName">
+                <el-input type="text" disabled v-model="formData.depName" maxlength="100" show-word-limit></el-input>
+            </el-form-item>
            
 
             <!-- <el-form-item label="申请部门" prop="applyDep">
@@ -53,12 +57,14 @@
 
 
             </el-form-item>
-             <!-- <el-form-item label="是否内部项目" prop="inside">
+
+             <el-form-item label="是否内部项目" prop="inside">
                  <template>
-                    <el-radio v-model="formData.type" label="1">是</el-radio>
-                    <el-radio v-model="formData.type" label="0">否</el-radio>
+                    <el-radio v-model="formData.duration" :label="1" :disabled="'新增' == this.operate ? false:true">是</el-radio>
+                    <el-radio v-model="formData.duration" :label="0" :disabled="'新增' == this.operate ? false:true">否</el-radio>
                 </template>
-             </el-form-item> -->
+             </el-form-item>
+
             <el-form-item align="right" v-if="operate != '详情'">
                 <el-button  type="primary" @click="submitForm('formData')" size="small">确定</el-button>
                 <!-- <el-button  type="primary" @click="save('formData')" size="small">确定</el-button> -->
@@ -98,9 +104,7 @@ export default {
                 ],
             },
             formData: { // 提交表单数据
-                // leaveType: 1,
-                // duration: 0, // 请假时长（小时）
-                type: '0'
+                duration: 0
             }, 
             file:null,
             files: [
@@ -139,7 +143,7 @@ export default {
                                 }
                                 this.file.append('uploadrole', "lizy");
                                 console.log(this.formData);
-                                console.log(this.formData.type);
+                                console.log(typeof(this.formData.duration));
                                 response = await api.add(this.file,this.formData)
                                 // console.log(response);
 

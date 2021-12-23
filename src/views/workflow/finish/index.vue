@@ -31,8 +31,9 @@
             <el-table-column align="center" label="操作" fixed="right" width="230">
                 <template slot-scope="{row}">
                     <el-button @click="clickProcessHistory(row)" type="text" >审批历史</el-button>
+                    <el-button type="text" @click="download(row)" >下载</el-button>
                     <el-popconfirm :title="`您确定删除【${row.processInstanceName || row.processKey}】和审批历史记录吗？`" @onConfirm="clickDelete(row.processInstanceId)" >
-                        <el-button slot="reference" type="text" >删除</el-button>
+                        <el-button slot="reference" type="text" style="margin-left: 12px">删除</el-button>
                     </el-popconfirm>
                 </template>
             </el-table-column>
@@ -130,13 +131,55 @@ export default {
         // 删除流程实例和审批历史记录
         async clickDelete(procInstId) {
             // 发送删除请求
-            const {code} = await api.deleteProcInstAndHistory(procInstId)
-            if(code === 200) {
+            // code    code
+            const {data} = await api.deleteProcInstAndHistory(procInstId)
+            if(data.code === 200) {
                 this.$message.success('删除成功')
                 // 刷新列表数据
                 this.fetchData()
             }
         },
+
+          // 下载
+        download(row){
+            console.log(row);
+            if(row.processName === '油气资产弃置流程'){
+                window.open('http://localhost:9528/doaa/download/'+row.businessKey)
+            }else if(row.processName === '合同管理流程'){
+                window.open('http://localhost:9528/cmc/download/'+row.businessKey)
+            }else if(row.processName === '薪酬管理标准和实施细则'){
+                window.open('http://localhost:9528/smsaIr/download/'+row.businessKey)
+            }else if(row.processName === '油水井资产报废流程'){
+                window.open('http://localhost:9528/soaga/download/'+row.businessKey)
+            }else if(row.processName === '合作项目年度审计'){
+                window.open('http://localhost:9528/aacp/download/'+row.businessKey)
+            }else if(row.processName === '石油合作项目操作费预算'){
+                window.open('http://localhost:9528/dpp/download/'+row.businessKey)
+            }else if(row.processName === '安全生产费用使用'){
+                window.open('http://localhost:9528/uospf/download/'+row.businessKey)
+            }else if(row.processName === '老油田稳产方案'){
+                window.open('http://localhost:9528/spoof/download/'+row.businessKey)
+            }else if(row.processName === '年度开发计划'){
+                window.open('http://localhost:9528/adp/download/'+row.businessKey)
+            }else if(row.processName === '原油结算'){
+                window.open('http://localhost:9528/cos/download/'+row.businessKey)
+            }else if(row.processName === '合作项目管理'){
+                window.open('http://localhost:9528/cpm/download/'+row.businessKey)
+            }else if(row.processName === '召开联管会'){
+                window.open('http://localhost:9528/hjmm/download/'+row.businessKey)
+            }else if(row.processName === '项目申报与审批'){
+                window.open('http://localhost:9528/paaac/download/'+row.businessKey)
+            }else if(row.processName === '合作方招标'){
+                window.open('http://localhost:9528/pb/download/'+row.businessKey)
+            }else if(row.processName === '合作区块筛选及报批'){
+                window.open('http://localhost:9528/cbsp/download/'+row.businessKey)
+            }
+            
+        }
+
+
+
+
     }
 }
 </script>

@@ -44,6 +44,7 @@
                         <el-button slot="reference" type="text">作废</el-button>
                     </el-popconfirm>
                     <el-button @click="clickProcessHistory(row)" type="text" >审批历史</el-button>
+                    <el-button type="text" @click="download(row)" style="margin-left: -2px">下载</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -173,6 +174,47 @@ export default {
                 this.fetchData()
             }
         },
+
+          // 下载
+        download(row){
+            console.log(row);
+            if(row.processInstanceName === '油气资产弃置流程'){
+                window.open('http://localhost:9528/doaa/download/'+row.businessKey)
+            }else if(row.processInstanceName === '合同管理流程'){
+                window.open('http://localhost:9528/cmc/download/'+row.businessKey)
+            }else if(row.processInstanceName === '薪酬管理标准和实施细则'){
+                window.open('http://localhost:9528/smsaIr/download/'+row.businessKey)
+            }else if(row.processInstanceName === '油水井资产报废流程'){
+                window.open('http://localhost:9528/soaga/download/'+row.businessKey)
+            }else if(row.processInstanceName === '合作项目年度审计'){
+                window.open('http://localhost:9528/aacp/download/'+row.businessKey)
+            }else if(row.processInstanceName === '石油合作项目操作费预算'){
+                window.open('http://localhost:9528/dpp/download/'+row.businessKey)
+            }else if(row.processInstanceName === '安全生产费用使用'){
+                window.open('http://localhost:9528/uospf/download/'+row.businessKey)
+            }else if(row.processInstanceName === '老油田稳产方案'){
+                window.open('http://localhost:9528/spoof/download/'+row.businessKey)
+            }else if(row.processInstanceName === '年度开发计划'){
+                window.open('http://localhost:9528/adp/download/'+row.businessKey)
+            }else if(row.processInstanceName === '原油结算流程'){
+                window.open('http://localhost:9528/cos/download/'+row.businessKey)
+            }else if(row.processInstanceName === '合作项目管理'){
+                window.open('http://localhost:9528/cpm/download/'+row.businessKey)
+            }else if(row.processInstanceName === '召开联管会'){
+                window.open('http://localhost:9528/hjmm/download/'+row.businessKey)
+            }else if(row.processInstanceName === '项目申报与审批'){
+                window.open('http://localhost:9528/paaac/download/'+row.businessKey)
+            }else if(row.processInstanceName === '合作方招标流程'){
+                window.open('http://localhost:9528/pb/download/'+row.businessKey)
+            }else if(row.processInstanceName === '合作区块筛选及报批'){
+                window.open('http://localhost:9528/cbsp/download/'+row.businessKey)
+            }
+            
+        }
+
+
+
+
         
     }
 }

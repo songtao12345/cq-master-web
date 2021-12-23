@@ -47,6 +47,9 @@
                     <el-button v-if="row.status == 0" @click="clickSubmit(row)" type="text" >重新申请</el-button>
                     <el-button v-if="row.status == 1" @click="clickSubmit(row)" type="text" >提交申请</el-button>
                     <el-button v-if="row.status == 2 || row.status == 3 || row.status == 4" @click="clickProcessHistory(row)" type="text" >审批历史</el-button>
+                    <el-button type="text" @click="download(row)">下载</el-button>
+                    <!-- <a href="http://172.20.10.2:9528/spoof/download/1472489801352540162" type="text">下载</a> -->
+                      <!-- <a href=`http://172.20.10.2:9528/spoof/download/1472489801352540162` type="text">下载</a> -->
                 </template>
             </el-table-column>
         </el-table>
@@ -111,7 +114,7 @@ export default {
             processStatus, // 流程状态
             page: {
                 current: 1,
-                size: 5,
+                size: 10,
                 total: 0
             },
             operate: '新增', // 操作标识：新增，编辑，详情
@@ -233,6 +236,12 @@ export default {
         handleCurrentChange(val) {
             this.page.current = val
             this.fetchData()
+        },
+
+         // 下载
+        download(row){
+        console.log(typeof(row.id));
+        window.open('http://localhost:9528/spoof/download/'+row.id)
         },
 
 

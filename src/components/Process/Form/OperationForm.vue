@@ -4,7 +4,9 @@
             <el-form-item v-if="operate == '详情'" label="申请人" prop="supplyDate">
                 <span>{{formData.username}}</span>
             </el-form-item> 
-           
+            <el-form-item v-if="operate !== '新增'" label="申请部门" prop="depName">
+                <el-input type="text" disabled v-model="formData.depName" maxlength="100" show-word-limit></el-input>
+            </el-form-item>
 
             <!-- <el-form-item label="申请部门" prop="applyDep">
                 <el-input type="text" v-model="formData.applyDep" maxlength="100" show-word-limit></el-input>

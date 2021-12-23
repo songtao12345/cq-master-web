@@ -27,12 +27,13 @@
                     <el-tag :type="row.state == '已启动' ? 'success': 'danger'">{{row.state}}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column  align="center" prop="xmlName" label="流程XML" min-width="190" >
+            <!-- <el-table-column  align="center" prop="xmlName" label="流程XML" min-width="190" >
                 <template slot-scope="{row}">
+                    <el-link type="primary">{{row.xmlName}}</el-link> -->
                     <!-- 注意组件上使用原生事件，要加 .active -->
-                    <el-link type="primary" @click.native="clickExportXML(row.id)">{{row.xmlName}}</el-link>
-                </template>
-            </el-table-column>
+                    <!-- <el-link type="primary" @click.native="clickExportXML(row.id)">{{row.xmlName}}</el-link> -->
+                <!-- </template>
+            </el-table-column> -->
             <el-table-column  align="center" prop="pngName" label="流程图片" min-width="240" >
                 <template slot-scope="{row}">
                     <el-link type="primary" @click="clickPreviewImg(row.id)">{{row.pngName}}</el-link>
@@ -185,8 +186,8 @@ export default {
         // 删除
         async clickDelete(row) {
             // 发送删除请求
-            const {code} = await api.deleteByDeploymentId(row.deploymentId, row.key)
-            if(code === 200) {
+            const {data} = await api.deleteByDeploymentId(row.deploymentId, row.key)
+            if(data.code === 200) {
                 this.$message.success('删除成功')
                 // 刷新列表数据
                 this.fetchData()
@@ -195,8 +196,9 @@ export default {
 
         // 挂起或激活流程定义
         async updateState(definitionId) {
-            const {code} = await api.updateProcessDefinitionState(definitionId)
-            if(code === 200) {
+            const {data} = await api.updateProcessDefinitionState(definitionId)
+            // console.log(data);
+            if(data.code === 200) {
                 this.$message.success('操作成功')
                 // 刷新列表数据
                 this.fetchData()

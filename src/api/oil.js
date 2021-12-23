@@ -22,44 +22,6 @@ export default {
   },
 
 
- 
-  // adds(data) {
-  //   return request({
-  //       url: '/oldOilProd/single',
-  //       method: 'post',
-  //       data
-  //   })
-  // },
-  // addmany(data) {
-  //   return request({
-  //       url: '/oldOilProd/manytwo',
-  //       method: 'post',
-  //       data
-  //   })
-  // },
-  // addbegin(data) {
-  //   return request({
-  //       url: '/oldOilProd/begin',
-  //       method: 'post',
-  //       data
-  //   })
-  // },
-  // addmanyone(data) {
-  //   return request({
-  //       url: '/oldOilProd/manyone',
-  //       method: 'post',
-  //       data
-  //   })
-  // },
-  // addmany(data) {
-  //   return request({
-  //       url: '/oldOilProd/many',
-  //       method: 'post',
-  //       data
-  //   })
-  // },
-  
-
   // 申请列表
   getList(data, current, size) {
     return request({
@@ -95,6 +57,14 @@ export default {
           method: 'post',
           data
       })
-   }
+   },
+
+     //下载文件
+     downLoadFile(id){
+      return request({
+          url: `/spoof/download/${id}`,
+          method: 'get'
+      })
+  }
 
 }

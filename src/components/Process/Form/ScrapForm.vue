@@ -6,10 +6,10 @@
             </el-form-item> 
            
 
-            <!-- <el-form-item label="申请部门" prop="applyDep">
-                <el-input type="text" v-model="formData.applyDep" maxlength="100" show-word-limit></el-input>
+            <el-form-item v-if="operate !== '新增'" label="申请部门" prop="depName">
+                <el-input type="text" disabled v-model="formData.depName" maxlength="100" show-word-limit></el-input>
             </el-form-item>
-            <el-form-item label="联系电话" prop="contactName">
+            <!-- <el-form-item label="联系电话" prop="contactName">
                 <el-input type="text" v-model="formData.contactName" maxlength="100" show-word-limit></el-input>
             </el-form-item> -->
              <!-- <el-form-item label="创建日期" prop="creatDate">
